@@ -11,6 +11,10 @@ class R_Controller extends CI_Controller
     protected $allowMethod = array('GET', 'POST','OPTIONS');
     // 返回数据类型
     protected $_responseType = '';
+    //返回数据编码
+    protected $_encoding = '';
+    //返回数据默认编码
+    protected $defaultEncoding = 'utf-8';
     // 默认的资源类型
     protected $defaultType = 'json';
     // REST允许请求的资源类型列表
@@ -65,10 +69,51 @@ class R_Controller extends CI_Controller
         if(!$this->auth->verify($Authorization)){
             $this->response(array('responseCode'=>FORBIDDEN,'responseMsg'=>'Forbidden'),403);
         }
+
+        $this->_clientID = $Authorization[0];
+        $this->_secret    = $Authorization[1];
     }
 
     /**
-     * get方法
+     * 数据XML编码
+     * @param mixed  $data 数据
+     * @param string $item 数字索引时的节点名称
+     * @param string $id   数字索引key转换为的属性名
+     * @return string
+     */
+    private function _data_to_xml($data, $item='item', $id='id') {
+        $xml = $attr = '';
+        foreach ($data as $key => $val) {
+            if(is_numeric($key)){
+                $id && $attr = " {$id}=\"{$key}\"";
+                $key  = $item;
+            }
+            $xml    .=  "<{$key}{$attr}>";
+            $xml    .=  (is_array($val) || is_object($val)) ? data_to_xml($val, $item, $id) : $val;
+            $xml    .=  "</{$key}>";
+        }
+        return $xml;
+    }
+
+    private function _xml_encode($data, $root='root', $item='item', $attr='', $id='id', $encoding='utf-8') {
+        if(is_array($attr)){
+            $_attr = array();
+            foreach ($attr as $key => $value) {
+                $_attr[] = "{$key}=\"{$value}\"";
+            }
+            $attr = implode(' ', $_attr);
+        }
+        $attr   = trim($attr);
+        $attr   = empty($attr) ? '' : " {$attr}";
+        $xml    = "<?xml version=\"1.0\" encoding=\"{$encoding}\"?>";
+        $xml   .= "<{$root}{$attr}>";
+        $xml   .= self::_data_to_xml($data, $item, $id);
+        $xml   .= "</{$root}>";
+        return $xml;
+    }
+
+    /**
+     * 获取get数据
      * @param $key
      * @return mixed
      */
@@ -78,7 +123,7 @@ class R_Controller extends CI_Controller
     }
 
     /**
-     *
+     *获取post数据
      * @param $key
      * @return mixed
      */
@@ -102,7 +147,7 @@ class R_Controller extends CI_Controller
             $data = json_encode($data);
         } elseif ('xml' == $this->_responseType) {
             // 返回xml格式数据
-            $data = xml_encode($data);
+            $data = self::_xml_encode($data);
         } elseif ('php' == $this->_responseType) {
             $data = serialize($data);
         }// 默认直接输出

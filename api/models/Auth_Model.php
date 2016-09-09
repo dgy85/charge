@@ -19,6 +19,6 @@ class Auth_Model extends R_Model
             return false;
         }
 
-        return  true;
+//        return  true;
     }
 }
