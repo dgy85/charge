@@ -36,6 +36,12 @@
  * @filesource
  */
 
+header("Access-Control-Allow-Origin: *");
+
+define('FORBIDDEN',400403);
+define('METHOD_NOT_ALLOWED',400405);
+//define('SUPPORTED_METHOD', 'GET,POST,PUT,DELETE,EVENT,EVENT_GET,REMOVE');
+
 /*
  *---------------------------------------------------------------
  * APPLICATION ENVIRONMENT
@@ -129,7 +135,7 @@ switch (ENVIRONMENT)
  *
  * NO TRAILING SLASH!
  */
-	$view_folder = '';
+	$view_folder = '../views/api';
 
 
 /*
@@ -234,6 +240,8 @@ switch (ENVIRONMENT)
 
 	// Name of the "system" directory
 	define('SYSDIR', basename(BASEPATH));
+
+    define('SHAREPATH',dirname(__DIR__) . DIRECTORY_SEPARATOR . 'share');
 
 	// The path to the "application" directory
 	if (is_dir($application_folder))
