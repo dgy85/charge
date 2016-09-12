@@ -236,6 +236,9 @@ switch (ENVIRONMENT)
 	// Name of the "system" directory
 	define('SYSDIR', basename(BASEPATH));
 
+    define('SHAREPATH',dirname(__DIR__) . DIRECTORY_SEPARATOR . 'share');
+
+
 	// The path to the "application" directory
 	if (is_dir($application_folder))
 	{

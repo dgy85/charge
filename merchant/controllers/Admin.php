@@ -11,6 +11,6 @@ class Admin extends Admin_Controller
 
     public function login()
     {
-        echo 'login';
+        $this->load->view('login');
     }
 }
