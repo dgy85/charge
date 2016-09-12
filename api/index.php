@@ -40,6 +40,7 @@ header("Access-Control-Allow-Origin: *");
 
 define('FORBIDDEN',400403);
 define('METHOD_NOT_ALLOWED',400405);
+define('BASEURI',$_SERVER['REQUEST_SCHEME'] . '://' . (isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : (isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : '')) .($_SERVER['SERVER_PORT']=='80' ? '' : ':' . $_SERVER['SERVER_PORT']) );
 //define('SUPPORTED_METHOD', 'GET,POST,PUT,DELETE,EVENT,EVENT_GET,REMOVE');
 
 /*

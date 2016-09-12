@@ -6,7 +6,13 @@ class Admin_Controller extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        print_r($this->uri);
+        if(!self::_checkLogin() && $this->uri->rsegments[1]!='login'){
+            redirect('/admin/login');
+        }
     }
 
+    protected function _checkLogin()
+    {
+        return false;
+    }
 }

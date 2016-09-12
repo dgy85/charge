@@ -35,6 +35,7 @@
  * @since	Version 1.0.0
  * @filesource
  */
+define('BASEURI',$_SERVER['REQUEST_SCHEME'] . '://' . (isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : (isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : '')) .($_SERVER['SERVER_PORT']=='80' ? '' : ':' . $_SERVER['SERVER_PORT']) );
 
 /*
  *---------------------------------------------------------------
