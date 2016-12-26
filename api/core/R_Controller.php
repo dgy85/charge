@@ -63,11 +63,11 @@ class R_Controller extends CI_Controller
         }
         $Authorization = explode(' ',$headers['Authorization']);
         if(sizeof($Authorization)!=2){
-            $this->response(array('responseCode'=>FORBIDDEN,'responseMsg'=>'Forbidden'),403);
+            $this->response(array('responseCode'=>FORBIDDEN,'responseMsg'=>'Authorization Incorrect'),403);
         }
 
         if(!$this->auth->verify($Authorization)){
-            $this->response(array('responseCode'=>FORBIDDEN,'responseMsg'=>'Forbidden'),403);
+            $this->response(array('responseCode'=>FORBIDDEN,'responseMsg'=>'Authorization Not Valid'),403);
         }
 
         $this->_clientID = $Authorization[0];
@@ -163,19 +163,19 @@ class R_Controller extends CI_Controller
     protected function getAcceptType()
     {
         $type = array(
-            'html' => 'text/html,application/xhtml+xml,*/*',
+//            'html' => 'text/html,application/xhtml+xml,*/*',
             'xml' => 'application/xml,text/xml,application/x-xml',
             'json' => 'application/json,text/x-json,application/jsonrequest,text/json',
-            'js' => 'text/javascript,application/javascript,application/x-javascript',
-            'css' => 'text/css',
-            'rss' => 'application/rss+xml',
-            'yaml' => 'application/x-yaml,text/yaml',
-            'atom' => 'application/atom+xml',
+//            'js' => 'text/javascript,application/javascript,application/x-javascript',
+//            'css' => 'text/css',
+//            'rss' => 'application/rss+xml',
+//            'yaml' => 'application/x-yaml,text/yaml',
+//            'atom' => 'application/atom+xml',
             'pdf' => 'application/pdf',
             'text' => 'text/plain',
-            'png' => 'image/png',
-            'jpg' => 'image/jpg,image/jpeg,image/pjpeg',
-            'gif' => 'image/gif',
+//            'png' => 'image/png',
+//            'jpg' => 'image/jpg,image/jpeg,image/pjpeg',
+//            'gif' => 'image/gif',
             'csv' => 'text/csv'
         );
 
